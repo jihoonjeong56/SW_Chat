@@ -1,0 +1,15 @@
+{
+  "name": "sw_chat",
+  "version": "1.0.0",
+  "description": "PM\r - 2023596 김민수",
+  "main": "chat.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}
