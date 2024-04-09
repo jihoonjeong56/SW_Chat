@@ -17,7 +17,6 @@ wss.on('connection', function connection(ws) {
       }
     });
   });
-
   ws.send('Welcome to the chat server!');
 });
 
