@@ -15,7 +15,7 @@
     <h1>Write Your Message</h1>
     <input type="text" id="messageInput" placeholder="Type a message...">
     
-    <p><button class= "btn btn-1"onclick="sendMessage()">Send</button></p>
+    <p><button id = "btn" class= "btn btn-1" onclick="sendMessage()">Send</button></p>
     <br>
     <p>전송 횟수: <span id="messageCount">0</span></p>
     
@@ -26,6 +26,16 @@
         const chat = document.getElementById('chat');
         const messageInput = document.getElementById('messageInput');
         const messageCount = document.getElementById('messageCount');
+
+        // Enter키 전송 구현 - 김민수
+        messageInput.addEventListener("keyup", function(event){
+            if(event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("btn").click();
+            }
+        })
+
+
 
         ws.onmessage = function(event) {
             // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
