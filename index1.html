@@ -27,6 +27,14 @@
         const messageInput = document.getElementById('messageInput');
         const messageCount = document.getElementById('messageCount');
 
+        // Enter키 구현 - 김민수
+        input.addEventListener("ketup", function(event){
+            if(event.keyCode === 13){
+                event.preventDefault();
+                document.getElementById("btn").click();
+            }
+        });
+
         ws.onmessage = function(event) {
             // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
             if (event.data instanceof Blob) {
