@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>Chat App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link rel="stylesheet" href="css/index1.css">
+    <style>
+        .chatwrapper {
+            display: flex;
+            justify-content: center;
+        }
+        #chat p {
+            text-align: center; /* 가운데 정렬 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chatwrapper">
+        <div id="chat"></div>
+    </div>
+    <div id="wrapper">
+        <h1>Write Your Message</h1>
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        
+        <p><button id="btn" class="btn btn-1" onclick="sendMessage()">Send</button></p>
+        <br>
+        <p>전송 횟수: <span id="messageCount">0</span></p>
+    </div>
+    <script>
+        let count = 0;
+        const ws = new WebSocket('ws://localhost:8080');
+        const chat = document.getElementById('chat');
+        const messageInput = document.getElementById('messageInput');
+        const messageCount = document.getElementById('messageCount');
+        
+
+        ws.onmessage = function(event) {
+            // event.data가 Blob 인스턴스일 경우 FileReader를 사용해서 읽어오기
+            if (event.data instanceof Blob) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    const message = document.createElement('p');
+                    message.textContent = reader.result;
+                    chat.appendChild(message);
+                };
+                reader.readAsText(event.data);
+            }
+            else{
+                const data = JSON.parse(event.data);
+                const message = document.createElement('p');
+                message.innerHTML = data.message;
+                chat.appendChild(message);
+            }
+        };
+
+        function sendMessage() {
+            const message = messageInput.value;
+            count++;
+            messageCount.textContent = count;
+            ws.send(message);
+            messageInput.value = '';
+        }
+    </script>
+</body>
+</html>
